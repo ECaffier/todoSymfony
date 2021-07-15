@@ -10,16 +10,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 #[Route('/project')]
 class ProjectController extends AbstractController
-{
+{    
 
     #[Route('/', name: 'project_index', methods: ['GET'])]
     public function index(ProjectRepository $projectRepository): Response
     {
+        $projects = $this->getUser()->getProjects();
+
         return $this->render('project/index.html.twig', [
-            'projects' => $projectRepository->findAll(),
+            'projects' => $projects,
         ]);
     }
 
@@ -47,8 +48,10 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/{id}', name: 'project_show', methods: ['GET'])]
+
     public function show(Project $project): Response
     {
+   
         return $this->render('project/show.html.twig', [
             'project' => $project,
         ]);

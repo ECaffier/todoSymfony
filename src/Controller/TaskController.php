@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,10 @@ class TaskController extends AbstractController
             'tasks' => $taskRepository->findAll(),
         ]);
     }
+  
+    #[Route('/new/{projectId}', name: 'task_new', methods: ['GET', 'POST'])]
 
-    #[Route('/new', name: 'task_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, ProjectRepository $ProjectRepository, int $projectId): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -30,10 +32,13 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $project =$ProjectRepository->find($projectId);
+            $task->setDateCreation(new \DateTime());
+            $task->setProjet($project);
             $entityManager->persist($task);
             $entityManager->flush();
 
-            return $this->redirectToRoute('task_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('project_show', ['id' => $projectId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('task/new.html.twig', [
@@ -77,6 +82,6 @@ class TaskController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('task_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('project_index', [], Response::HTTP_SEE_OTHER);
     }
 }
