@@ -3,15 +3,14 @@
 {% block title %}Project index{% endblock %}
 
 {% block body %}
-    <h1>Project index</h1>
+    <h1 class="my-5">Mes projets : </h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th>Nom du project</th>
                 <th>Description</th>
-                <th>Date_creation</th>
+                <th>Date de creation</th>
                 <th>Deadline</th>
                 <th>actions</th>
             </tr>
@@ -19,14 +18,13 @@
         <tbody>
         {% for project in projects %}
             <tr>
-                <td>{{ project.id }}</td>
                 <td>{{ project.name }}</td>
                 <td>{{ project.description }}</td>
                 <td>{{ project.dateCreation ? project.dateCreation|date('Y-m-d') : '' }}</td>
                 <td>{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('project_show', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
+                    <a class ="btn btn-primary" href="{{ path('project_show', {'id': project.id}) }}">Infos</a>
+                    <a class ="btn btn-primary" href="{{ path('project_edit', {'id': project.id}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('project_new') }}">Create new</a>
+    <a class ="btn btn-info" href="{{ path('project_new') }}">Nouveau projet</a>
 {% endblock %}
