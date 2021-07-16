@@ -22,7 +22,20 @@ class TaskRepository extends ServiceEntityRepository
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */
+
+    public function getTasks(){
+        return $this->createQueryBuilder('t')
+        ->innerJoin('t.project', 'p')
+        ->addSelect('p')
+        ->orderBy('t.deadline', 'DESC')
+        ->setMaxResults(20)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     /*
+
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('t')

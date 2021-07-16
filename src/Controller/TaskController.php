@@ -35,6 +35,7 @@ class TaskController extends AbstractController
             $project =$ProjectRepository->find($projectId);
             $task->setDateCreation(new \DateTime());
             $task->setProjet($project);
+            $task->setStatus('En cours');
             $entityManager->persist($task);
             $entityManager->flush();
 
@@ -73,15 +74,34 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'task_delete', methods: ['POST'])]
-    public function delete(Request $request, Task $task): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($task);
-            $entityManager->flush();
-        }
+    #[Route('/{id}/deleteTask', name: 'task_delete', methods: ['GET','POST'])]
 
-        return $this->redirectToRoute('project_index', [], Response::HTTP_SEE_OTHER);
+
+    public function delete(int $id=1, TaskRepository $TaskRepository): Response
+    {
+        
+            $Task = $TaskRepository->find($id);
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($Task);
+            $entityManager->flush();
+       
+            return $this->redirectToRoute('project_show', ['id' => $Task->getProjet()->getId()], Response::HTTP_SEE_OTHER);
+            
+    }
+
+
+    #[Route('/{id}/updateStatus', name: 'status_update', methods: ['GET','POST'])]
+    public function statusUpdate(int $id=1, TaskRepository $TaskRepository): Response
+    {
+        
+            $Task = $TaskRepository->find($id);
+            $Task->setStatus("Terminé");
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($Task);
+            $entityManager->flush();
+       
+        return $this->redirectToRoute('project_show', ['id' => $Task->getProjet()->getId()], Response::HTTP_SEE_OTHER);
+            
     }
 }
