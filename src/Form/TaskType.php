@@ -6,6 +6,7 @@ use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TaskType extends AbstractType
@@ -17,8 +18,9 @@ class TaskType extends AbstractType
             'label' => 'Nom de la tâche',
         ))
             ->add('description')
-            ->add('deadline')
-        ;
+            ->add('deadline' , DateType::class, [
+                'input'  => 'datetime'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
