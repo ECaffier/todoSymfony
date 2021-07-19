@@ -23,17 +23,17 @@
                 <td>{{ project.dateCreation ? project.dateCreation|date('Y-m-d') : '' }}</td>
                 <td>{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a class ="btn btn-primary" href="{{ path('project_show', {'id': project.id}) }}">Infos</a>
-                    <a class ="btn btn-primary" href="{{ path('project_edit', {'id': project.id}) }}">Editer</a>
+                    <a class ="btn btn-warning" href="{{ path('project_show', {'id': project.id}) }}">Infos</a>
+                    <a class ="btn btn-warning" href="{{ path('project_edit', {'id': project.id}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Pas de projets</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a class ="btn btn-info" href="{{ path('project_new') }}">Nouveau projet</a>
+    <a class ="btn btn-warning" href="{{ path('project_new') }}">Nouveau projet</a>
 {% endblock %}
