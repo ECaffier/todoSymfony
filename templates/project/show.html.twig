@@ -37,7 +37,6 @@
     {{ include('project/_delete_form.html.twig') }}
 
     <h3>Taches en cours :</h3>
-
         {% if project.tasks is not empty %}
             {% for task in project.tasks %}
                <div class="card my-3">
@@ -45,7 +44,10 @@
                         Tache : {{task.name}}
                         <div class="card-body">
                             Description : {{task.description}}
-                            <a class="btn btn-danger" href="{{ path('task_delete', {'id': task.id}) }}">Del</a>
+                            Status : {{task.status}}
+                            Deadline : {{task.deadline|date('Y-m-d')}}
+                            <a class="btn btn-warning" href="{{ path('status_update', {'id': task.id}) }}">Terminé</a>
+                            <a class="btn btn-danger" href="{{ path('task_delete', {'id': task.id}) }}">Supprimer</a>
                         </div>
                     </div>
                 </div> 

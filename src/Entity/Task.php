@@ -43,6 +43,11 @@ class Task
      */
     private $projet;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Task
     public function setProjet(?Project $projet): self
     {
         $this->projet = $projet;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

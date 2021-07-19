@@ -51,6 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Project::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OrderBy({"deadline" = "ASC"})
      */
     private $projects;
 

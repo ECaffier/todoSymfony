@@ -36,6 +36,7 @@ class Project
 
     /**
      * @ORM\Column(type="datetime")
+     * @ORM\OrderBy({"ASC"})
      */
     private $deadline;
 
@@ -47,6 +48,7 @@ class Project
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="projet", orphanRemoval=true)
+     * @ORM\OrderBy({"deadline" = "ASC"})
      */
     private $tasks;
 
