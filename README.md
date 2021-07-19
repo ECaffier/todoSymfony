@@ -5,6 +5,7 @@ Dernière évalutation de formation à l'AFPA, semaine 21. Projet de To Do list 
 Spécifications fonctionnelles :
 
 -Se connecter avec son compte personnel ou de s’inscrire s’il n’a pas de compte
+
 -Voir tous les projets de cet utilisateur sur une page
 -Créer un nouveau projet via un formulaire
 -Voir le détail d’un projet, c’est-à-dire le projet avec ses tâches quand il clique dessus
