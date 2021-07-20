@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Project{% endblock %}
+{% block title %}Projet{% endblock %}
 
 {% block body %}
-    <h1>Project</h1>
+    <h1>Projet</h1>
 
     <table class="table">
         <tbody>
@@ -16,7 +16,7 @@
                 <td>{{ project.description }}</td>
             </tr>
             <tr>
-                <th>Date_creation</th>
+                <th>Date de création</th>
                 <td>{{ project.dateCreation ? project.dateCreation|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
@@ -28,25 +28,40 @@
 
 
 
-    <a class="btn btn-dark" href="{{ path('project_index') }}">back to list</a>
+    <a onclick="kkk()" class="btn btn-warning" href="{{ path('project_index') }}">Retour à l'accueil</a>
 
-    <a class="btn btn-dark" href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
+    <a class="btn btn-warning" href="{{ path('project_edit', {'id': project.id}) }}">Modifier le projet</a>
 
-    <a class="btn btn-dark" href="{{ path('task_new', {'projectId': project.id}) }}">Ajouter une tâche</a>
+    <a class="btn btn-warning" href="{{ path('task_new', {'projectId': project.id}) }}">Ajouter une tâche</a>
 
     {{ include('project/_delete_form.html.twig') }}
 
     <h3>Taches en cours :</h3>
         {% if project.tasks is not empty %}
             {% for task in project.tasks %}
-               <div class="card my-3">
-                    <div class="card-header">
-                        Tache : {{task.name}}
+                {% if task.status is same as "En cours" %}
+                <div class="card my-3">
+                {% else %}
+                <div class="card bg-success my-3">
+                <h2 class="text-warning"> Tâche terminée </h2>
+                {% endif %}
+                <div class="card-header">
+                    <h2>
+                        Tâche : {{task.name}}
+                    </h2>
                         <div class="card-body">
+                        <p>
                             Description : {{task.description}}
-                            Status : {{task.status}}
+                        </p>
+                        <p>
                             Deadline : {{task.deadline|date('Y-m-d')}}
+                        </p>
+                        {% if task.status == "En cours" %}
+                            <p>
+                                Status : {{task.status}}
+                            </p>
                             <a class="btn btn-warning" href="{{ path('status_update', {'id': task.id}) }}">Terminé</a>
+                        {% endif %}
                             <a class="btn btn-danger" href="{{ path('task_delete', {'id': task.id}) }}">Supprimer</a>
                         </div>
                     </div>
